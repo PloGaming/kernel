@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.asm": "asm-intel-x86-generic",
+        "memory.h": "c",
+        "config.h": "c",
+        "idt.h": "c",
+        "stdint.h": "c",
+        "kernel.h": "c"
+    }
+}
