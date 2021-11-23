@@ -21,3 +21,15 @@ void kheap_init()
     }
 
 }
+
+//Function for allocating tot bytes to the heap
+void *kmalloc(size_t size)
+{
+    return heap_malloc(&kernel_heap, size);
+}
+
+//Function for free the bytes of a ptr
+void kfree(void* ptr)
+{
+    heap_free(&kernel_heap, ptr);
+}

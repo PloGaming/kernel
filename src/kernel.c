@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/heap/kheap.h"
 
 uint16_t *video_mem = 0;
 uint16_t terminal_col = 0;
@@ -77,6 +78,9 @@ void kernel_main()
     terminal_initialize();
     print("Avvio LeoOs in corso ... \n");
     print("Inizializzazione interrupt descriptor table (idt) ... \n");
+
+    //Initialize the heap;
+    kheap_init();
 
     // Initialize the idt
     idt_init();

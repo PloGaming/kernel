@@ -6,6 +6,10 @@
         "idt.h": "c",
         "stdint.h": "c",
         "kernel.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "array": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp"
     }
 }
