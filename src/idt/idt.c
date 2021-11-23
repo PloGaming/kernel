@@ -45,7 +45,7 @@ void idt_init()
     }
 
     idt_set(0, idt_zero); //Division by zero
-    idt_set(0x20, int21h); //Keyboard pressed
+    idt_set(0x21, int21h); //Keyboard pressed
     
 
     // Load the idt from assembly function

@@ -75,10 +75,10 @@ void print(const char *str){
 void kernel_main()
 {
     terminal_initialize();
-    print("Leonardo che figo\nsus");
+    print("Avvio LeoOs in corso ... \n");
+    print("Inizializzazione interrupt descriptor table (idt) ... \n");
 
     // Initialize the idt
     idt_init();
 
-    
 }

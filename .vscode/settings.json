@@ -5,6 +5,7 @@
         "config.h": "c",
         "idt.h": "c",
         "stdint.h": "c",
-        "kernel.h": "c"
+        "kernel.h": "c",
+        "stdbool.h": "c"
     }
 }
