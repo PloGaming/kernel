@@ -77,14 +77,17 @@ void kernel_main()
 {
     terminal_initialize();
     print("Avvio LeoOs in corso ... \n");
-    print("Inizializzazione interrupt descriptor table (idt) ... \n");
 
+    print("Inizializzazione interrupt descriptor table (idt) ... \n");
     //Initialize the heap;
     kheap_init();
 
+    print("Inizializzazione heap e heap entry table ... \n");
     // Initialize the idt
     idt_init();
 
     //Enables the system interrupts
     enable_interrupts();
+
+    print("Inizializzazione completata ... \n");
 }
