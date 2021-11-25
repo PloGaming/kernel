@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "status.h"
 
+//This function load the selected directory into the directory table
 void paging_load_directory(uint32_t* directory);
 static uint32_t* current_directory = 0;
 
@@ -27,6 +28,7 @@ struct paging_4gb_chunk* paging_new_4gb(uint8_t flags)
     return chunk_4gb;
 }
 
+//Switch the current directory table
 void paging_switch(uint32_t* directory)
 {
     paging_load_directory(directory);
@@ -44,6 +46,7 @@ bool paging_is_aligned(void* addr)
     return (uint32_t) addr % PAGING_PAGE_SIZE == 0;
 }
 
+//Function for getting the indexes from an address
 int paging_get_indexes(void* virtual_address, uint32_t* directory_index_out,uint32_t* table_index_out )
 {
     int res = 0;
@@ -52,14 +55,16 @@ int paging_get_indexes(void* virtual_address, uint32_t* directory_index_out,uint
         res = -EINVARG;
         goto out;
     }
-
+    //We divide the virtual address by the total size of a page table
     *directory_index_out = ((uint32_t)virtual_address / (PAGING_TOTAL_ENTRIES_PER_TABLE * PAGING_PAGE_SIZE));
+    //The equation for calculating the table index
     *table_index_out = ((uint32_t) virtual_address % (PAGING_TOTAL_ENTRIES_PER_TABLE * PAGING_PAGE_SIZE ) / PAGING_PAGE_SIZE);
 
 out:
     return res;
 }
 
+//Set a page table entry to the val variable
 int paging_set(uint32_t* directory, void* virt, uint32_t val)
 {
     if(!paging_is_aligned(virt))
@@ -69,14 +74,15 @@ int paging_set(uint32_t* directory, void* virt, uint32_t val)
 
     uint32_t directory_index = 0;
     uint32_t table_index = 0;
-    int res = paging_get_indexes(virt, &directory_index, &table_index);
+    int res = paging_get_indexes(virt, &directory_index, &table_index); //We retrieve the page table and the entry index for the virtual address
     if(res < 0)
     {
         return res;
     }
 
+
     uint32_t entry = directory[directory_index];
-    uint32_t* table = (uint32_t*)(entry & 0xfffff000);
+    uint32_t* table = (uint32_t*)(entry & 0xfffff000); //Becuase we want to extract the address, not the flag
     table[table_index] = val;
     return res;
 }

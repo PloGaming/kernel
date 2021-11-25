@@ -95,6 +95,7 @@ void kernel_main()
     // Switch to kernel paging chunk
     paging_switch(paging_4gb_chunk_get_directory(kernel_chunk));
 
+    //Paging example, from now on if we try to see the address 0x1000 we will change the ptr
     char *ptr  = kzalloc(4096);
     paging_set(paging_4gb_chunk_get_directory(kernel_chunk), (void*)0x1000, (uint32_t) ptr | PAGING_ACCESS_FROM_ALL | PAGING_IS_PRESENT | PAGING_IS_WRITABLE);
 
