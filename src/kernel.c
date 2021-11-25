@@ -4,6 +4,7 @@
 #include "idt/idt.h"
 #include "io/io.h"
 #include "memory/heap/kheap.h"
+#include "memory/paging/paging.h"
 
 uint16_t *video_mem = 0;
 uint16_t terminal_col = 0;
@@ -64,13 +65,15 @@ void terminal_initialize()
     }
 }
 
-void print(const char *str){
+void print(const char *str)
+{
     size_t len = strlen(str);
     for(int i = 0; i < len; i++){
         terminal_write_char(str[i], 15);
     }
 }
 
+static struct paging_4gb_chunk* kernel_chunk = 0;
 
 //The main function of the kernel
 void kernel_main()
@@ -85,6 +88,15 @@ void kernel_main()
     print("Inizializzazione heap e heap entry table ... \n");
     // Initialize the idt
     idt_init();
+
+    // Setup paging
+    kernel_chunk = paging_new_4gb(PAGING_IS_WRITABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
+
+    // Switch to kernel paging chunk
+    paging_switch(paging_4gb_chunk_get_directory(kernel_chunk));
+    
+    // Enable paging
+    enable_paging();
 
     //Enables the system interrupts
     enable_interrupts();
