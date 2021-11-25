@@ -70,6 +70,7 @@ load32:
     call ata_lba_read
     jmp CODE_SEG:0x0100000 ;jumping to kernel
 
+
 ; This subroutine is going to read through ports our disk
 ata_lba_read:
     mov ebx, eax ; Backup the LBA
