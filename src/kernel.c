@@ -86,6 +86,9 @@ void kernel_main()
     //Initialize the heap;
     kheap_init();
 
+    //Search and initialize the disk
+    disk_search_and_init();
+
     print("Inizializzazione heap e heap entry table ... \n");
     // Initialize the idt
     idt_init();
@@ -99,9 +102,6 @@ void kernel_main()
     print("Inizializzazione paging in corso ... \n");
     // Enable paging
     enable_paging();
-    
-    char buf[512];
-    disk_read_sector(0, 1, buf);
 
     //Enables the system interrupts
     enable_interrupts();

@@ -1,7 +1,14 @@
 //Documentation https://wiki.osdev.org/ATA_read/write_sectors
 //Section Read in LBA mode
 
+#include "disk.h"
 #include "io/io.h"
+#include "memory/memory.h"
+#include "config.h"
+#include "status.h"
+
+//This will represents the primary disk
+struct disk disk;
 
 //Function for reading a sector from a disk, and storing it in a buffer
 int disk_read_sector(int lba, int total, void* buf)
@@ -22,7 +29,7 @@ int disk_read_sector(int lba, int total, void* buf)
         //Wait for the buffer to be ready
         char c = insb(0x1F7);
         while(!(c & 0x08))
-        
+
         {
             c = insb(0x1F7);
         }
@@ -37,4 +44,33 @@ int disk_read_sector(int lba, int total, void* buf)
         }
     }
     return 0;
+}
+
+//This function will search and initialize every disk found
+void disk_search_and_init()
+{
+    memset(&disk, 0, sizeof(disk));
+    disk.type = LEOS_DISK_TYPE_REAL;
+    disk.sector_size = LEOS_SECTOR_SIZE;
+}
+
+//Get a disk from an index
+struct disk* disk_get(int index)
+{
+    if(index != 0){
+        return 0;
+    }
+
+    return &disk;
+}
+
+//Read a block from a disk
+int disk_read_block(struct disk* idisk, unsigned int lba, int total, void* buf)
+{
+    if(idisk != &disk)
+    {
+        return -EIO;
+    }
+
+    return disk_read_sector(lba, total, buf);
 }
