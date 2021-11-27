@@ -5,7 +5,7 @@ global insw
 global outb
 global outw
 
-
+;Read from the port 1 byte
 insb:
     push ebp
     mov ebp, esp
@@ -17,6 +17,7 @@ insb:
     pop ebp
     ret
 
+;Read from the port 1 word
 insw:
     push ebp
     mov ebp, esp
@@ -28,6 +29,7 @@ insw:
     pop ebp
     ret
 
+;Write from the port 1 byte
 outb:
     push ebp
     mov ebp, esp
@@ -39,6 +41,7 @@ outb:
     pop ebp
     ret
 
+;Write from the port 1 word
 outw:
     push ebp
     mov ebp, esp
