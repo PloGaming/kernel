@@ -6,22 +6,14 @@
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
 #include "disk/disk.h"
+#include "string/string.h"
+#include "fs/pparser.h"
+#include "disk/streamer.h"
 
 uint16_t *video_mem = 0;
 uint16_t terminal_col = 0;
 uint16_t terminal_row = 0;
 
-//Function for retrieving the length of a string
-size_t strlen(const char* str)
-{
-
-    size_t len = 0;
-    while(str[len]){
-        len++;
-    }
-
-    return len;
-}
 
 //Function for converting a character to an hex
 uint16_t terminal_make_char(char c, char colour)
@@ -68,7 +60,7 @@ void terminal_initialize()
 
 void print(const char *str)
 {
-    size_t len = strlen(str);
+    int len = strlen(str);
     for(int i = 0; i < len; i++){
         terminal_write_char(str[i], 15);
     }
@@ -107,4 +99,13 @@ void kernel_main()
     enable_interrupts();
 
     print("Inizializzazione completata ... \n");
+
+    print("Test funzionamento disco ... \n");
+
+    struct path_root* root_path = pathparser_parse("0:/bin/shell.exe", NULL);
+
+    if(root_path)
+    {
+        print("Disco funzionante\n");
+    }
 }

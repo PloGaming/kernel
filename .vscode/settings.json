@@ -11,6 +11,8 @@
         "string_view": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp",
-        "paging.h": "c"
+        "paging.h": "c",
+        "kheap.h": "c",
+        "status.h": "c"
     }
 }

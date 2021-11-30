@@ -12,5 +12,5 @@
 #define LEOS_HEAP_ADDRESS    0x01000000 //Heap start address
 #define LEOS_HEAP_TABLE_ADDRESS 0x00007E00 //Heap table entry address
 
-#define LEOS_SECTOR_SIZE 512;
+#define LEOS_SECTOR_SIZE 512
 #endif
